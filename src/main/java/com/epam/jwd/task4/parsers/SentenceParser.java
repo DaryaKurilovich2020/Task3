@@ -32,12 +32,18 @@ public class SentenceParser {
     private List<SentencePart> split(String sentence) {
         StringTokenizer tokenizer = new StringTokenizer(sentence, properties.PUNCTUATIONS, true);
         List<SentencePart> sentenceParts = new ArrayList<>();
+        List<Word> words=new ArrayList<>();
+        List<PunctuationMark> punctuationMarks=new ArrayList<>();
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
             if (token.matches(properties.PUNCTUATIONS)) {
-                sentenceParts.add(new PunctuationMark(token));
+                PunctuationMark newMark=new PunctuationMark(token.trim());
+                sentenceParts.add(newMark);
+                punctuationMarks.add(newMark);
             } else {
-                sentenceParts.add(new Word(token.trim()));
+                Word newWord=new Word(token.trim());
+                sentenceParts.add(newWord);
+                words.add(newWord);
             }
         }
         return sentenceParts;

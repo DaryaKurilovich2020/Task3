@@ -12,7 +12,7 @@ public class Client {
     private static ObjectOutputStream out;
     private static Text text;
 
-    public Client() throws IOException {
+    public Client() {
     }
 
     public static void main(String[] args) {

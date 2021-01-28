@@ -3,7 +3,6 @@ package com.epam.jwd.task4.DAO;
 import com.epam.jwd.task4.entities.Text;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import java.util.List;
 
 public class TextReader {
     private BufferedReader reader;
-    private String filename;
+    private final String filename;
 
     public TextReader(String filename) {
         this.filename = filename;

@@ -14,7 +14,7 @@ public class Server {
     private static ObjectInputStream in;
     private static String filename;
 
-    public Server() throws IOException {
+    public Server() {
     }
 
     public static void main(String[] args) {
