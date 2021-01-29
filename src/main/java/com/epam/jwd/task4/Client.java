@@ -7,10 +7,10 @@ import java.net.Socket;
 
 public class Client {
     private static Socket clientSocket;
-    private static BufferedReader consoleReader;
     private static ObjectInputStream in;
     private static ObjectOutputStream out;
-    private static Text text;
+    private static BufferedReader input;
+    private static BufferedWriter output;
 
     public Client() {
     }
@@ -19,17 +19,23 @@ public class Client {
         try {
             try {
                 clientSocket = new Socket("localhost", 1);
-                consoleReader = new BufferedReader(new InputStreamReader(System.in));
                 in = new ObjectInputStream(clientSocket.getInputStream());
                 out = new ObjectOutputStream(clientSocket.getOutputStream());
-                out.writeObject(text);
-                out.flush();
+                input=new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                output=new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+                output.write("source.txt");
+                output.flush();
+                String serverWord = input.readLine();
+                System.out.println(serverWord);
+                Text text=(Text) in.readObject();
+                System.out.println("I got the text");
+
             } finally {
                 clientSocket.close();
                 in.close();
                 out.close();
             }
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             System.err.println(e);
         }
     }

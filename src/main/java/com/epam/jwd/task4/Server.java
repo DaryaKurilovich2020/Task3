@@ -1,8 +1,10 @@
 package com.epam.jwd.task4;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import com.epam.jwd.task4.DAO.TextReader;
+import com.epam.jwd.task4.entities.Text;
+import com.epam.jwd.task4.parsers.TextParser;
+
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -25,10 +27,21 @@ public class Server {
                 try {
                     in = new ObjectInputStream(clientSocket.getInputStream());
                     out = new ObjectOutputStream(clientSocket.getOutputStream());
+                    BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                    BufferedWriter output = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+                    filename = input.readLine();
+                    output.write("Hi, i got the filename");
+                    output.flush();
+                    TextReader reader=new TextReader(filename);
+                    Text text=reader.read();
+                    out.writeObject(text);
+                    out.flush();
+
                 } finally {
                     clientSocket.close();
                     in.close();
                     out.close();
+
                 }
             } finally {
                 server.close();

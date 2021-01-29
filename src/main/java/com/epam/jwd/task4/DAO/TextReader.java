@@ -1,6 +1,7 @@
 package com.epam.jwd.task4.DAO;
 
 import com.epam.jwd.task4.entities.Text;
+import com.epam.jwd.task4.parsers.TextParser;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -17,12 +18,12 @@ public class TextReader {
     }
 
     public Text read() throws IOException {
-        Text text = new Text();
-
+        TextParser parser = new TextParser(readLines());
+        Text text = parser.parse();
         return text;
     }
 
-    public List<String> readLines() throws IOException {
+    private List<String> readLines() throws IOException {
         reader = new BufferedReader(new FileReader(filename));
         List<String> lines = new ArrayList<>();
         String line;
